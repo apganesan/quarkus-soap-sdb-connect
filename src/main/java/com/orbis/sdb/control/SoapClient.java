@@ -15,7 +15,7 @@ import java.net.URL;
 
 import javax.xml.namespace.QName;
 
-import com.orbis.sdb.control.wsdlclient.CalculatorSoap;
+import com.orbis.sdb.control.theriaque.TheriakAPIPort;
 
 import jakarta.inject.Singleton;
 import jakarta.xml.ws.Service;
@@ -27,11 +27,12 @@ import jakarta.xml.ws.Service;
 @Singleton
 public class SoapClient {
 
-    public int add(int a, int b) throws Exception {
-        URL url = new URL("http://www.dneonline.com/calculator.asmx?wsdl");
-        QName qname = new QName("http://tempuri.org/", "Calculator");
+    public Object fetchDetail() throws Exception {
+        URL url = new URL("http://ws000535.dedalus.lan:14280/webservice_v4331/server.php?wsdl");
+        QName qname = new QName("http://www.ws-theriaque.localhost/server.php", "theriakAPIService");
         Service service = Service.create(url, qname);
-        CalculatorSoap calculator = service.getPort(CalculatorSoap.class);
-        return calculator.add(a, b);
+        TheriakAPIPort apiPort = service.getPort(TheriakAPIPort.class);
+
+        return apiPort.getTheNivGrav();
     }
 }

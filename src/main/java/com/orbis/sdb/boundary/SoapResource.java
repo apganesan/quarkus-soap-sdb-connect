@@ -12,11 +12,11 @@
 package com.orbis.sdb.boundary;
 
 import com.orbis.sdb.control.SoapClient;
+import com.orbis.sdb.control.TheriaqueAdaptor;
 
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
-import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.Response;
 
 /**
@@ -29,10 +29,13 @@ public class SoapResource {
     @Inject
     SoapClient soapClient;
 
+    @Inject
+    TheriaqueAdaptor adaptor;
+
     @GET
-    @Path("/add")
-    public Response addValue(@QueryParam("param1") int param1,@QueryParam("param2")int param2) throws Exception {
-        int result = soapClient.add(param1,param2);
-        return Response.ok("SOAP response Add Service: " + result).build();
+    @Path("/getTheriak")
+    public Response addValue() throws Exception {
+        Object result = adaptor.getServicePort();
+        return Response.ok("SOAP Theriaque Service: " + result).build();
     }
 }
